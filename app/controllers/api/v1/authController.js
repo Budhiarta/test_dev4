@@ -252,12 +252,21 @@ module.exports = {
     async show(req, res){
         try{
             const user = await userService.findByPk(req.params.id);
-            res.status(200).json({
-                data : user
-            })
+            if(user != null){
+                res.status(200).json({
+                    status: "OK",
+                    messsage: "Data Berhasil Ditemukan",
+                    data : user
+                })
+            }else{
+                res.status(404).json({
+                    status: "FAIL",
+                    messsage: "Data Tidak Ditemukan"
+                })
+            }
         }catch(err){
             res.status(422).json({
-                status: "No Data",
+                status: "ERROR",
                 message: err.message
             })
         }
